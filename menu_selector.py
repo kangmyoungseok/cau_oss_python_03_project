@@ -1,6 +1,7 @@
 import file_manager
 from parking_spot_manager import str_list_to_class_list, print_spots
 from parking_spot_manager import filter_by_name, filter_by_district, filter_by_city, filter_by_location, filter_by_ptype
+from parking_spot_manager import sort_by_keyword
 
 def start_process(path):
     str_list = file_manager.read_file(path)
@@ -54,8 +55,7 @@ def start_process(path):
             print(keywords)
             keyword = input('type keyword:')
             if keyword in keywords:
-                print("not implemented yet")
-                # fill this block
+                spots = sort_by_keyword(spots,keyword)               
             else: print("invalid input")
         elif select == 4:
             print("Exit")

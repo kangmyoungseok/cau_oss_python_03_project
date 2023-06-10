@@ -1,3 +1,19 @@
+"""
+    parking_spot 클래스와 관련된 함수들을 정의한 모듈
+
+    parking_spot 클래스는 주차장 정보를 저장하는 클래스
+
+    parking_spot 클래스의 인스턴스에 저장되는 정보
+        name (str): 주차장 이름
+        city (str): 주차장 위치(시도)
+        district (str): 주차장 위치(시군구)
+        ptype (str): 주차장 유형
+        longitude (float): 경도
+        latitude (float): 위도
+
+    그 외에 parking_spot 클래스와 관련된 함수들을 정의    
+"""
+
 class parking_spot:
     """
     하나의 주차장 정보를 저장하는 클래스
@@ -140,6 +156,20 @@ def filter_by_location(spots: list, locations: tuple) -> list:
                       locations[2] < item.get('longitude') < locations[3]] 
     return filtered_list
 
+def sort_by_keyword(spots: list, keyword: str) -> list:
+    """
+    주차장 정보를 해당하는 키워드로 정렬하여 새로운 리스트로 반환
+
+    Args:
+        spots (list): 주차장 정보가 저장된 클래스 리스트
+        keyword (str): 정렬할 기준 컬럼
+    
+    Returns:
+        list: 클래스 리스트
+    """
+    sorted_list = sorted(spots, key=lambda x: x.get(keyword))
+    return sorted_list
+
 
 # 각 단계별로 테스트 (테스트할때 주석해제 후 사용)
 if __name__ == '__main__':
@@ -151,14 +181,14 @@ if __name__ == '__main__':
     # print_spots(spots)
 
     # version#3
-    str_list = file_manager.read_file("./input/free_parking_spot.csv")
-    spots = str_list_to_class_list(str_list)
+    # str_list = file_manager.read_file("./input/free_parking_spot.csv")
+    # spots = str_list_to_class_list(str_list)
     # spots = filter_by_district(spots, '동작')
     # spots = filter_by_name(spots,'대학교')
     # spots = filter_by_city(spots, '인천')
-    spots = filter_by_location(spots, (35.5,36.5,127.5,128.5))
-    print_spots(spots)
+    #spots = filter_by_location(spots, (35.5,36.5,127.5,128.5))
+    #print_spots(spots)
     
     # version#4
-    # spots = sort_by_keyword(spots, 'name')
-    # print_spots(spots)
+    spots = sort_by_keyword(spots, 'latitude')
+    print_spots(spots)
