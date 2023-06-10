@@ -68,6 +68,79 @@ def print_spots(spots: list) -> None:
         print(item)
 
 
+def filter_by_name(spots: list, name: str) -> list:
+    """
+    주차장 정보중 해당하는 이름(name)을 가진 추자장들만 새로운 리스트로 반환
+
+    Args:
+        spots (list): 주차장 정보가 저장된 클래스 리스트
+        name (str): 이름
+    
+    Returns:
+        list: 클래스 리스트
+    """
+    filtered_list = [item for item in spots if name in item.get('name')]
+    return filtered_list
+
+def filter_by_city(spots: list, city: str) -> list:
+    """
+    주차장 정보중 해당 도시(시도)에 해당하는 추자장들만 새로운 리스트로 반환
+
+    Args:
+        spots (list): 주차장 정보가 저장된 클래스 리스트
+        city (str): 시도
+    
+    Returns:
+        list: 클래스 리스트
+    """
+    filtered_list = [item for item in spots if city in item.get('city')]
+    return filtered_list
+
+def filter_by_district(spots: list, district: str) -> list:
+    """
+    주차장 정보중 해당 도시(시군구)에 해당하는 추자장들만 새로운 리스트로 반환
+
+    Args:
+        spots (list): 주차장 정보가 저장된 클래스 리스트
+        district (str): 시군구
+    
+    Returns:
+        list: 클래스 리스트
+    """
+    filtered_list = [item for item in spots if district in item.get('district')]
+    return filtered_list
+
+def filter_by_ptype(spots: list, ptype: str) -> list:
+    """
+    주차장 정보중 해당하는 주차장 유형 가진 추자장들만 새로운 리스트로 반환
+
+    Args:
+        spots (list): 주차장 정보가 저장된 클래스 리스트
+        ptype (str): 주차장 유형
+    
+    Returns:
+        list: 클래스 리스트
+    """
+    filtered_list = [item for item in spots if ptype in item.get('ptype')]
+    return filtered_list
+
+def filter_by_location(spots: list, locations: tuple) -> list:
+    """
+    주차장 정보중 주어진 위도,경도 범위 내의 추자장들만 새로운 리스트로 반환
+
+    Args:
+        spots (list): 주차장 정보가 저장된 클래스 리스트
+        locations (tuple): (min_lat, max_lat, min_long, max_long)
+    
+    Returns:
+        list: 클래스 리스트
+    """
+    filtered_list = [item for item in spots if \
+                      locations[0] < item.get('latitude') < locations[1] and \
+                      locations[2] < item.get('longitude') < locations[3]] 
+    return filtered_list
+
+
 # 각 단계별로 테스트 (테스트할때 주석해제 후 사용)
 if __name__ == '__main__':
     print("Testing the module...")
@@ -75,11 +148,16 @@ if __name__ == '__main__':
     import file_manager
     str_list = file_manager.read_file("./input/free_parking_spot_seoul.csv")
     spots = str_list_to_class_list(str_list)
-    print_spots(spots)
+    # print_spots(spots)
 
     # version#3
+    str_list = file_manager.read_file("./input/free_parking_spot.csv")
+    spots = str_list_to_class_list(str_list)
     # spots = filter_by_district(spots, '동작')
-    # print_spots(spots)
+    # spots = filter_by_name(spots,'대학교')
+    # spots = filter_by_city(spots, '인천')
+    spots = filter_by_location(spots, (35.5,36.5,127.5,128.5))
+    print_spots(spots)
     
     # version#4
     # spots = sort_by_keyword(spots, 'name')
